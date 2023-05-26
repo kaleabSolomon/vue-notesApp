@@ -11,10 +11,26 @@
           +
         </button>
       </header>
-      <div>
-        <div>
-          <p></p>
-          <p></p>
+      <div class="flex flex-wrap">
+        <div
+          class="w-56 h-56 bg-red-500 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
+        >
+          <p class="text-sm">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+            ipsam delectus consequuntur repudiandae nam vitae. Temporibus,
+            possimus.
+          </p>
+          <p class="text-xs font-bold">05/26/2023</p>
+        </div>
+        <div
+          class="w-56 h-56 bg-red-500 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
+        >
+          <p class="text-sm">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+            ipsam delectus consequuntur repudiandae nam vitae. Temporibus,
+            possimus.
+          </p>
+          <p class="text-xs font-bold">05/26/2023</p>
         </div>
       </div>
     </div>
