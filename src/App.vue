@@ -5,7 +5,7 @@ const newNote = ref("");
 const notes = ref([]);
 
 function getRandomColor() {
-  return "hsl{" + Math.random() * 360 + ", 100%, 75%}";
+  return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
 }
 
 const addNote = () => {
@@ -65,24 +65,14 @@ const addNote = () => {
       </header>
       <div class="flex flex-wrap">
         <div
-          class="w-56 h-56 bg-red-500 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
+          :style="{ backgroundColor: note.noteColor }"
+          v-for="note in notes"
+          class="w-56 h-56 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
         >
-          <p class="text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-            ipsam delectus consequuntur repudiandae nam vitae. Temporibus,
-            possimus.
+          <p class="text-sm">{{ note.text }}</p>
+          <p class="text-xs font-bold">
+            {{ note.date }}
           </p>
-          <p class="text-xs font-bold">05/26/2023</p>
-        </div>
-        <div
-          class="w-56 h-56 bg-red-500 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
-        >
-          <p class="text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-            ipsam delectus consequuntur repudiandae nam vitae. Temporibus,
-            possimus.
-          </p>
-          <p class="text-xs font-bold">05/26/2023</p>
         </div>
       </div>
     </div>
