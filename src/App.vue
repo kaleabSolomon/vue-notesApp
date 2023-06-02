@@ -66,12 +66,13 @@ const addNote = () => {
       <div class="flex flex-wrap">
         <div
           :style="{ backgroundColor: note.noteColor }"
+          :key="note.id"
           v-for="note in notes"
           class="w-56 h-56 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
         >
           <p class="text-sm">{{ note.text }}</p>
           <p class="text-xs font-bold">
-            {{ note.date }}
+            {{ note.date.toLocaleDateString("en-US") }}
           </p>
         </div>
       </div>
