@@ -2,6 +2,7 @@
 import { ref } from "vue";
 const showModal = ref(false);
 const newNote = ref("");
+const errorMsg = ref("");
 const notes = ref([]);
 
 function getRandomColor() {
@@ -9,6 +10,9 @@ function getRandomColor() {
 }
 
 const addNote = () => {
+  if (newNote.value.length < 5) {
+    return (errorMsg.value = "Note needs to be 5 characters or more");
+  }
   notes.value.push({
     id: Math.floor(Math.random() * 1000000),
     text: newNote.value,
@@ -17,6 +21,7 @@ const addNote = () => {
   });
   showModal.value = false;
   newNote.value = "";
+  errorMsg.value = "";
 };
 </script>
 
@@ -29,13 +34,14 @@ const addNote = () => {
       class="w-750 bg-white rounded-xl p-7 relative flex flex-col min-h-200 z-20"
     >
       <textarea
-        v-model="newNote"
+        v-model.trim="newNote"
         name="notes"
         id="notes"
         cols="30"
         rows="10"
         class="p-2.5"
       ></textarea>
+      <p v-if="errorMsg">{{ errorMsg }}</p>
       <div class="flex w-1/2 m-auto">
         <button
           class="py-2.5 px-5 bg-cyan-500 text-white cursor-pointer mt-3 mx-auto w-1/3"
