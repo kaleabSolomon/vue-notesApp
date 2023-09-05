@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+
 const showModal = ref(false);
 const newNote = ref("");
 const errorMsg = ref("");
