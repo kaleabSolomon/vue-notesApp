@@ -1,7 +1,0 @@
-type Query {
-  say_hi(name: String!): SayHiOupt!
-}
-
-type SayHiOupt {
-  message: String!
-}

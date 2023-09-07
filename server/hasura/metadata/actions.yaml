@@ -1,12 +1,6 @@
-actions:
-- name: say_hi
-  definition:
-    kind: ""
-    handler: '{{ACTION_BASE_URL}}/say_hi'
-    forward_client_headers: true
+actions: []
 custom_types:
   enums: []
   input_objects: []
-  objects:
-  - name: SayHiOupt
+  objects: []
   scalars: []

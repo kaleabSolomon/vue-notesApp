@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
-
+import { useQuery } from "@vue/apollo-composable";
+import gql from "graphql-tag";
 const showModal = ref(false);
 const newNote = ref("");
 const errorMsg = ref("");
@@ -9,6 +10,19 @@ const notes = ref([]);
 function getRandomColor() {
   return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
 }
+
+const { data } = useQuery(gql`
+  query getNotes {
+    notes {
+      id
+      note
+      created_at
+      bgColor
+    }
+  }
+`);
+
+console.log(data);
 
 const addNote = () => {
   if (newNote.value.length < 5) {
