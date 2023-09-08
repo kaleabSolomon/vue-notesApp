@@ -43,20 +43,55 @@ const getNotes = async function () {
   }
 };
 getNotes();
-const addNote = () => {
-  if (newNote.value.length < 5) {
-    return (errorMsg.value = "Note needs to be 5 characters or more");
+// const addNote = () => {
+//   if (newNote.value.length < 5) {
+//     return (errorMsg.value = "Note needs to be 5 characters or more");
+//   }
+//   notes.value.push({
+//     id: Math.floor(Math.random() * 1000000),
+//     note: newNote.value,
+//     created_at: new Date(),
+//     bgcolor: getRandomColor(),
+//   });
+//   showModal.value = false;
+//   newNote.value = "";
+//   errorMsg.value = "";
+//   console.log(notes.value);
+// };
+
+const addNote = async function () {
+  try {
+    const response = await fetch("http://localhost:8080/v1/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-hasura-admin-secret": "myadminsecretkey",
+      },
+      body: JSON.stringify({
+        query: `
+          mutation AddNote($note: String!, $bgColor: String!) {
+            insert_notes_one(object: {note: $note, bgcolor: $bgColor}) {
+              id
+            }
+          }
+        `,
+        variables: {
+          note: newNote.value,
+          bgColor: getRandomColor(),
+        },
+      }),
+    });
+
+    const data = await response.json();
+
+    showModal.value = false;
+    newNote.value = "";
+    errorMsg.value = "";
+
+    console.log(data);
+  } catch (e) {
+    console.log("error: " + e.message);
   }
-  notes.value.push({
-    id: Math.floor(Math.random() * 1000000),
-    text: newNote.value,
-    date: new Date(),
-    noteColor: getRandomColor(),
-  });
-  showModal.value = false;
-  newNote.value = "";
-  errorMsg.value = "";
-  console.log(notes.value);
 };
 </script>
 
