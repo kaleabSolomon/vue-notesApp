@@ -33,9 +33,7 @@ const getNotes = async function () {
     let data = await result.json();
     let fetchedData = data.data.notes;
 
-    fetchedData.forEach((note) => {
-      notes.value.push(note);
-    });
+    notes.value = [...fetchedData];
 
     console.log(notes.value);
   } catch (e) {
@@ -43,21 +41,6 @@ const getNotes = async function () {
   }
 };
 getNotes();
-// const addNote = () => {
-//   if (newNote.value.length < 5) {
-//     return (errorMsg.value = "Note needs to be 5 characters or more");
-//   }
-//   notes.value.push({
-//     id: Math.floor(Math.random() * 1000000),
-//     note: newNote.value,
-//     created_at: new Date(),
-//     bgcolor: getRandomColor(),
-//   });
-//   showModal.value = false;
-//   newNote.value = "";
-//   errorMsg.value = "";
-//   console.log(notes.value);
-// };
 
 const addNote = async function () {
   try {
@@ -83,7 +66,7 @@ const addNote = async function () {
     });
 
     const data = await response.json();
-
+    getNotes();
     showModal.value = false;
     newNote.value = "";
     errorMsg.value = "";
@@ -147,9 +130,9 @@ const addNote = async function () {
           class="w-56 h-56 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
         >
           <p class="text-sm">{{ note.note }}</p>
-          <!-- <p class="text-xs font-bold">
-            {{ note.date.toLocaleDateString("en-US") }}
-          </p> -->
+          <p class="text-xs font-bold">
+            {{ new Date(note.created_at).toLocaleDateString("en-US") }}
+          </p>
         </div>
       </div>
     </div>
