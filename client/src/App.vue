@@ -1,7 +1,5 @@
 <script setup>
 import { ref } from "vue";
-// import { useQuery } from "@vue/apollo-composable";
-// import gql from "graphql-tag";
 const showModal = ref(false);
 const newNote = ref("");
 const errorMsg = ref("");
@@ -34,8 +32,6 @@ const getNotes = async function () {
     let fetchedData = data.data.notes;
 
     notes.value = [...fetchedData];
-
-    console.log(notes.value);
   } catch (e) {
     console.log("error: " + e.message);
   }
@@ -70,8 +66,6 @@ const addNote = async function () {
     showModal.value = false;
     newNote.value = "";
     errorMsg.value = "";
-
-    console.log(data);
   } catch (e) {
     console.log("error: " + e.message);
   }
@@ -97,7 +91,6 @@ const deleteNote = async function (noteId) {
       }),
     });
 
-    console.log(`deleted ${noteId}`);
     getNotes();
   } catch (e) {
     console.log("error: " + e.message);
