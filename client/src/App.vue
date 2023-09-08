@@ -76,6 +76,33 @@ const addNote = async function () {
     console.log("error: " + e.message);
   }
 };
+
+const deleteNote = async function (noteId) {
+  try {
+    const response = await fetch("http://localhost:8080/v1/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-hasura-admin-secret": "myadminsecretkey",
+      },
+      body: JSON.stringify({
+        query: `mutation deleteNote($id: uuid!){
+          delete_notes_by_pk(id:$id) {
+      id
+    }
+  }`,
+        variables: {
+          id: noteId,
+        },
+      }),
+    });
+
+    console.log(`deleted ${noteId}`);
+    getNotes();
+  } catch (e) {
+    console.log("error: " + e.message);
+  }
+};
 </script>
 
 <template>
@@ -134,7 +161,7 @@ const addNote = async function () {
             <p class="text-xs font-bold">
               {{ new Date(note.created_at).toLocaleDateString("en-US") }}
             </p>
-            <button>
+            <button class="m-1" @click="deleteNote(note.id)">
               <svg
                 width="20px"
                 height="20px"
