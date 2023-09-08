@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { useQuery } from "@vue/apollo-composable";
-import gql from "graphql-tag";
+// import { useQuery } from "@vue/apollo-composable";
+// import gql from "graphql-tag";
 const showModal = ref(false);
 const newNote = ref("");
 const errorMsg = ref("");
@@ -11,19 +11,32 @@ function getRandomColor() {
   return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
 }
 
-const { data } = useQuery(gql`
-  query getNotes {
-    notes {
+const getNotes = async function () {
+  try {
+    const result = await fetch("http://localhost:8080/v1/graphql", {
+      method: "POST",
+      headers: {
+        "x-hasura-admin-secret": "myadminsecretkey",
+      },
+      body: JSON.stringify({
+        query: `query{
+        notes {
       id
       note
       created_at
-      bgColor
+      bgcolor
     }
+      }`,
+      }),
+    });
+
+    let notes = await result.json();
+    console.log(notes);
+  } catch (e) {
+    console.log("error: " + e.message);
   }
-`);
-
-console.log(data);
-
+};
+getNotes();
 const addNote = () => {
   if (newNote.value.length < 5) {
     return (errorMsg.value = "Note needs to be 5 characters or more");
