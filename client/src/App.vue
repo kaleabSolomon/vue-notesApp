@@ -30,8 +30,14 @@ const getNotes = async function () {
       }),
     });
 
-    let notes = await result.json();
-    console.log(notes);
+    let data = await result.json();
+    let fetchedData = data.data.notes;
+
+    fetchedData.forEach((note) => {
+      notes.value.push(note);
+    });
+
+    console.log(notes.value);
   } catch (e) {
     console.log("error: " + e.message);
   }
@@ -50,6 +56,7 @@ const addNote = () => {
   showModal.value = false;
   newNote.value = "";
   errorMsg.value = "";
+  console.log(notes.value);
 };
 </script>
 
@@ -99,15 +106,15 @@ const addNote = () => {
       </header>
       <div class="flex flex-wrap">
         <div
-          :style="{ backgroundColor: note.noteColor }"
+          :style="{ backgroundColor: note.bgcolor }"
           :key="note.id"
           v-for="note in notes"
           class="w-56 h-56 p-2.5 rounded-2xl mr-5 mb-5 flex flex-col justify-between"
         >
-          <p class="text-sm">{{ note.text }}</p>
-          <p class="text-xs font-bold">
+          <p class="text-sm">{{ note.note }}</p>
+          <!-- <p class="text-xs font-bold">
             {{ note.date.toLocaleDateString("en-US") }}
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
